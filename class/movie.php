@@ -8,8 +8,9 @@ class movie {
     private int $durata;
     private string $poster;
     private string $trama;
+    public array $attori;
 
-public function __construct(string $name, string $regia, string $date, Genere $genere, string $lingua, int $durata, string $poster, string $trama,) {
+public function __construct(string $name, string $regia, string $date, Genere $genere, array $attori, string $lingua, int $durata, string $poster, string $trama,) {
 
    $this->name =  $name;
    $this->regia =  $regia;
@@ -18,13 +19,29 @@ public function __construct(string $name, string $regia, string $date, Genere $g
    $this->lingua =  $lingua;
    $this->durata =  $durata;
    $this->poster = $poster;
-   $this->poster = $trama ;
+   $this->trama = $trama ;       
+   $this->attori = $attori;
 }
 
 public function getMovie() {
+    $attori = array_map(function($attore) {
+        return $attore->getAttori();
+    }, $this->attori);
 
-  return  $movie=[$this->name, $this->regia, $this->date, $this->genere, $this->lingua, $this->durata, $this->poster, $this->poster, ];
-}  
+    $movie = [
+        'name' => $this->name,
+        'regia' => $this->regia,
+        'date' => $this->date,
+        'genere' => $this->genere->getGenere(),
+        'attori' => $attori,
+        'lingua' => $this->lingua,
+        'durata' => $this->durata,
+        'poster' => $this->poster,
+        'trama' => $this->trama,
+    ];
+
+    return $movie;
+}
 
 }
 ?>
